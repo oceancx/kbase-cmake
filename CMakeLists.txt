@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.5)
 project(KBase VERSION 1.0.0 LANGUAGES CXX)
 include(cotire.cmake)
 
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/dist CACHE PATH "..." FORCE)
+endif()
+
 add_library(KBase  
     src/kbase/at_exit_manager.cpp
     src/kbase/base64.cpp
