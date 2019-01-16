@@ -67,50 +67,8 @@ endif()
 
 set_target_properties(KBase PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch/precompile.h")
 cotire(KBase)
+add_library(KBase::KBase ALIAS KBase)
 
-install(TARGETS KBase
-    EXPORT  KBaseTargets
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
-    RUNTIME DESTINATION bin
-    INCLUDES DESTINATION include
-)
 
-set_target_properties(KBase PROPERTIES EXPORT_NAME KBase)
-
-install(DIRECTORY include/ DESTINATION include)
-
-install(EXPORT KBaseTargets
-    FILE
-        KBaseTargets.cmake 
-    NAMESPACE
-        KBase::
-    DESTINATION
-        lib/cmake/KBase
-)
-
-#Create a ConfigVersion.cmake file
-include(CMakePackageConfigHelpers)
-write_basic_package_version_file(
-    ${CMAKE_CURRENT_BINARY_DIR}/KBaseConfigVersion.cmake
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY AnyNewerVersion
-)
-
-configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/KBaseConfig.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/KBaseConfig.cmake
-    INSTALL_DESTINATION lib/cmake/KBase
-)
-
-#Install the config, configversion and custom find modules
-install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/KBaseConfig.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/KBaseConfigVersion.cmake
-    DESTINATION lib/cmake/KBase
-)
-
-##############################################
-#export(EXPORT KBaseTargets FILE ${CMAKE_CURRENT_BINARY_DIR}/KBaseTargets.cmake  NAMESPACE KBase::)
-
-#Register package in user's package registry
-#export(PACKAGE KBase)
+include(cmake/HelperMacroFunction.cmake)
+export_library_macro(KBase KBase KBase:: lib/cmake/kbase)
