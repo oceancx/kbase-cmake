@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.5)
 project(KBase VERSION 1.0.0 LANGUAGES CXX)
-include(cotire.cmake)
+include(cmake/cotire.cmake)
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/dist CACHE PATH "..." FORCE)
 endif()
 
-add_library(KBase  
+add_library(kbase  
     src/kbase/at_exit_manager.cpp
     src/kbase/base64.cpp
     src/kbase/command_line.cpp
@@ -27,7 +27,7 @@ add_library(KBase
 )
 
 if(WIN32)
-    target_sources(KBase PRIVATE    
+    target_sources(kbase PRIVATE    
         src/kbase/base_path_provider_win.cpp
         src/kbase/debugger_win.cpp
         src/kbase/environment_win.cpp
@@ -37,7 +37,7 @@ if(WIN32)
         src/kbase/stack_walker_win.cpp
     )
 elseif(UNIX)
-   target_sources(KBase PRIVATE
+   target_sources(kbase PRIVATE
         src/kbase/base_path_provider_posix.cpp 
         src/kbase/debugger_posix.cpp 
         src/kbase/environment_posix.cpp 
@@ -48,7 +48,7 @@ elseif(UNIX)
     )
 endif()
 
-target_include_directories(KBase
+target_include_directories(kbase
     PUBLIC 
         $<INSTALL_INTERFACE:include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -57,7 +57,7 @@ target_include_directories(KBase
 )
 
 if(WIN32)
-    target_compile_definitions(KBase 
+    target_compile_definitions(kbase 
         PUBLIC
             -DNOMINMAX 
             -DUNICODE 
@@ -65,10 +65,8 @@ if(WIN32)
     )
 endif()
 
-set_target_properties(KBase PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch/precompile.h")
-cotire(KBase)
-add_library(KBase::KBase ALIAS KBase)
-
+set_target_properties(kbase PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch/precompile.h")
+cotire(kbase)
 
 include(cmake/HelperMacroFunction.cmake)
-export_library_macro(KBase KBase KBase:: lib/cmake/kbase)
+export_library_macro(kbase KBase KBase:: lib/cmake/kbase)
