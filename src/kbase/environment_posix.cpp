@@ -51,6 +51,14 @@ void Environment::RemoveVar(const CharType* name)
     DLOG_IF(ERROR, rv != 0) << "Failed to call unsetenv; errno: " << errno;
 }
 
+#if defined(OS_APPLE)
+// static
+EnvTable Environment::CurrentEnvironmentBlock()
+{
+    EnvTable current_env_table;
+    return current_env_table;
+}
+#else
 // static
 EnvTable Environment::CurrentEnvironmentBlock()
 {
@@ -64,5 +72,6 @@ EnvTable Environment::CurrentEnvironmentBlock()
 
     return current_env_table;
 }
+#endif
 
 }   // namespace kbase

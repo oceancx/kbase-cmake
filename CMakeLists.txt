@@ -46,6 +46,16 @@ elseif(UNIX)
         src/kbase/os_info_posix.cpp 
         src/kbase/stack_walker_posix.cpp
     )
+elseif(APPLE)
+    target_sources(kbase PRIVATE
+        src/kbase/base_path_provider_posix.cpp 
+        src/kbase/debugger_posix.cpp 
+        src/kbase/environment_posix.cpp 
+        src/kbase/file_iterator_posix.cpp 
+        src/kbase/file_util_posix.cpp 
+        src/kbase/os_info_posix.cpp 
+        src/kbase/stack_walker_posix.cpp
+    )
 endif()
 
 target_include_directories(kbase
@@ -63,8 +73,14 @@ if(WIN32)
             -DUNICODE 
             -DWIN32_LEAN_AND_MEAN
     )
+elseif(APPLE)
+    target_compile_definitions(kbase 
+        PUBLIC
+            -D_POSIX_C_SOURCE=200112L
+        )
 endif()
 
+target_compile_features(kbase PUBLIC cxx_std_14)
 set_target_properties(kbase PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch/precompile.h")
 cotire(kbase)
 

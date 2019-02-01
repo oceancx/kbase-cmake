@@ -90,12 +90,12 @@ void FileIterator::GetNext()
         }
 
         // Update the entry info.
-        cur_entry_ = FileInfo(entry_path,
-                              entry_stat.st_size,
-                              S_ISDIR(entry_stat.st_mode),
-                              FileTime(entry_stat.st_ctim),
-                              FileTime(entry_stat.st_mtim),
-                              FileTime(entry_stat.st_atim));
+       cur_entry_ = FileInfo(entry_path,
+                             entry_stat.st_size,
+                             S_ISDIR(entry_stat.st_mode),
+                             FileTime(entry_stat.st_ctime),
+                             FileTime(entry_stat.st_mtime),
+                             FileTime(entry_stat.st_atime));
 
         return;
     }

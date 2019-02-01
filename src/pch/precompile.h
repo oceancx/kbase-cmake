@@ -13,12 +13,13 @@
 
 // The Windows header needs to come before almost all the other
 // Windows-specific headers.
+#ifdef _WIN32
 #include <Windows.h>
 #include <dwmapi.h>
 #include <shellapi.h>
 #include <wincrypt.h>
 #include <wtypes.h>
-
+#endif
 // C-Runtime headers.
 #include <fcntl.h>
 #include <memory.h>

@@ -84,6 +84,12 @@ public:
         return *this;
     }
 
+    PickleReader& operator>>(unsigned long& value)
+    {
+        ReadBuiltIn(value);
+        return *this;
+    }
+
     PickleReader& operator>>(int64_t& value)
     {
         ReadBuiltIn(value);
@@ -230,6 +236,12 @@ public:
     }
 
     Pickle& operator<<(unsigned int value)
+    {
+        WriteBuiltIn(value);
+        return *this;
+    }
+
+    Pickle& operator<<(unsigned long value)
     {
         WriteBuiltIn(value);
         return *this;

@@ -7,6 +7,53 @@
 #include <chrono>
 #include <cstdio>
 
+#if defined(OS_APPLE)
+namespace {
+
+using kbase::SystemArchitecture;
+
+using VersionNumber = kbase::OSInfo::VersionNumber;
+
+SystemArchitecture GetSystemArchitecture()
+{
+    auto sys_arch = SystemArchitecture::Unknown;
+    return sys_arch;
+}
+
+void GetSystemVersion(VersionNumber& version_number)
+{
+}
+
+long GetNumberOfCores()
+{
+    return 1;
+}
+
+}   // namespace
+
+namespace kbase {
+
+OSInfo::OSInfo() noexcept
+    : architecture_(GetSystemArchitecture()),
+      core_count_(GetNumberOfCores()),
+      vm_granularity_(0)
+{
+    GetSystemVersion(version_number_);
+}
+
+// static
+std::chrono::seconds OSInfo::UpTime()
+{
+    return std::chrono::seconds(0);
+}
+
+std::string OSInfo::SystemName() const
+{
+    return "Unknown";
+}
+
+}   // namespace kbase
+#else
 #include <sys/sysinfo.h>
 #include <sys/utsname.h>
 #include <unistd.h>
@@ -92,3 +139,4 @@ std::string OSInfo::SystemName() const
 }
 
 }   // namespace kbase
+#endif

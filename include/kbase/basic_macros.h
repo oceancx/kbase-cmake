@@ -13,6 +13,9 @@
 #define OS_WIN 1
 #elif defined(__linux__)
 #define OS_POSIX 1
+#elif defined(__APPLE__)
+#define OS_POSIX 1
+#define OS_APPLE 1
 #else
 #error Platform not supported
 #endif

@@ -92,9 +92,9 @@ bool GetFileInfo(const Path& path, FileInfo& info)
     info = FileInfo(path,
                     file_info.st_size,
                     S_ISDIR(file_info.st_mode),
-                    FileTime(file_info.st_ctim),
-                    FileTime(file_info.st_mtim),
-                    FileTime(file_info.st_atim));
+                    FileTime(file_info.st_ctime),
+                    FileTime(file_info.st_mtime),
+                    FileTime(file_info.st_atime));
 
     return true;
 }

@@ -86,10 +86,17 @@ SYSTEMTIME TimePointToWindowsSystemTime(TimePoint time_point)
 
 #elif defined(OS_POSIX)
 
+#if defined(OS_APPLE) 
+TimePoint TimePointFromTimespec(const timespec& timespec)
+{
+    return Clock::from_time_t(0);
+}
+#else 
 TimePoint TimePointFromTimespec(const timespec& timespec)
 {
     return Clock::from_time_t(timespec.tv_sec) + std::chrono::nanoseconds(timespec.tv_nsec);
 }
+#endif
 
 #endif
 
