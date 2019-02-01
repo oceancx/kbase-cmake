@@ -76,7 +76,7 @@ if(WIN32)
 elseif(APPLE)
     target_compile_definitions(kbase 
         PUBLIC
-            -D_POSIX_C_SOURCE=200112L
+            -D_POSIX_C_SOURCE=200809L
         )
 endif()
 
